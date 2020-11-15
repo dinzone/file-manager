@@ -1,0 +1,16 @@
+<template>
+  <nav-bar></nav-bar>
+</template>
+
+<script>
+import NavBar from "./components/NavBar.vue";
+export default {
+  name: "App",
+  components: { NavBar },
+};
+</script>
+<style>
+body {
+  background-color: rgb(247, 247, 247);
+}
+</style>
