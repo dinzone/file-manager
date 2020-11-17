@@ -1,7 +1,9 @@
 <template>
   <div class="nav-holder">
-    <div><img src="../assets/folder-icon.png" class="folder-icon" /></div>
-    <div>file manger</div>
+    <div class="nav-holder">
+      <div><img src="../assets/folder-icon.png" class="folder-icon" /></div>
+      <div>FILE MANAGER</div>
+    </div>
     <div>{{ currDate }}</div>
   </div>
 </template>
