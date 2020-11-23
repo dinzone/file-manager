@@ -1,12 +1,18 @@
-import NavBar from './components/NavBar'
+import styled from 'styled-components';
 
-import './App.css';
+import NavBar from './components/NavBar';
+import FileList from './components/FileList';
+
+const Div = styled.div`
+  background-color:aliceblue;
+`;
 
 function App() {
   return (
-    <div className="App">
+    <Div className="App">
       <NavBar></NavBar>
-    </div>
+      <FileList></FileList>
+    </Div>
   );
 }
 
