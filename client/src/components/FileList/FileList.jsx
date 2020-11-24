@@ -13,8 +13,8 @@ const StyledListItem = styled(ListItem)`
 `;
 
 
-function FileList({ paths }) {
-    const fileList = paths.map((p, i) => <StyledListItem key={i} path={p}></StyledListItem>);
+function FileList({ paths, pathClickFunc }) {
+    const fileList = paths.map((p, i) => <StyledListItem key={i} path={p} pathClickFunc={pathClickFunc}></StyledListItem>);
     return (
         <Div>
             {fileList}
