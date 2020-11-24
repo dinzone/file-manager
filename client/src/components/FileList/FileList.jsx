@@ -1,8 +1,25 @@
+import styled from 'styled-components';
+
 import ListItem from './ListItem';
 
+const Div = styled.div`
+    display:flex;
+    flex-direction:column;
+`;
+
+const StyledListItem = styled(ListItem)`
+    margin:0.2em;
+    margin-left:0.5em;
+`;
+
+
 function FileList({ paths }) {
-    const fileList = paths.map((p, i) => <ListItem key={i} path={p}></ListItem>);
-    return fileList;
+    const fileList = paths.map((p, i) => <StyledListItem key={i} path={p}></StyledListItem>);
+    return (
+        <Div>
+            {fileList}
+        </Div>
+    );
 }
 
 export default FileList;

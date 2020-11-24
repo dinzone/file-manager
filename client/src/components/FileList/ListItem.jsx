@@ -1,6 +1,6 @@
-function ListItem({ path }) {
+function ListItem({ className, path }) {
     return (
-        <div>
+        <div className={className}>
             {path}
         </div>
     );
