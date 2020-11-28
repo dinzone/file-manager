@@ -1,27 +1,28 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 
-import Moment from 'moment'
+import moment from 'moment'
 
 import NavBar from './NavBar';
 
-class NavBarContainer extends Component {
-    state = {
-        currentTime: Moment()
+function NavBarContainer() {
+    const [currentTime, setCurrentTime] = useState(moment());
+    let timeInterval = null;
+    function setTimeInterval(intevalId) {
+        timeInterval = intevalId;
     }
-    render() {
-        return (
-            <NavBar time={this.state.currentTime}></NavBar>
-        );
-    }
-    componentDidMount() {
-        let self = this;
-        setInterval(() => {
-            self.setState({
-                ...self.state,
-                currentTime: Moment()
-            })
-        }, 1000);
-    }
+    useEffect(() => {
+        setTimeInterval(setInterval(() => {
+            setCurrentTime(moment());
+        }, 1000));
+        return () => {
+            if (timeInterval) {
+                clearInterval(timeInterval);
+            }
+        }
+    })
+    return (
+        <NavBar time={currentTime}></NavBar>
+    );
 }
 
 export default NavBarContainer;

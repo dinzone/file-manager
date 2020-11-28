@@ -5,6 +5,10 @@ import folderIcon from '../../assets/folderIcon.jpg'
 const NavHolder = styled.div`
     display: flex;
     justify-content: space-between;
+    margin-bottom: 1em;
+    padding-bottom: 0.3em;
+    background-color:#c8e1f7;
+    user-select:none;
 `;
 
 const TimeDiv = styled.div`
