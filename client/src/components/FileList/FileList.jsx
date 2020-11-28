@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import ListItem from './ListItem';
 
-const Div = styled.div`
+const StyledDiv = styled.div`
     display:flex;
     flex-direction:column;
 `;
@@ -16,9 +16,9 @@ const StyledListItem = styled(ListItem)`
 function FileList({ paths, pathClickFunc }) {
     const fileList = paths.map((p, i) => <StyledListItem key={i} path={p} pathClickFunc={pathClickFunc}></StyledListItem>);
     return (
-        <Div>
+        <StyledDiv>
             {fileList}
-        </Div>
+        </StyledDiv>
     );
 }
 
