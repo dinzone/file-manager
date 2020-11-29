@@ -2,9 +2,10 @@ const fse = require("fs-extra");
 const path = require("path");
 
 module.exports.getAllFiles = async (route) => {
-  await fse.readdir(route,
-    (err, files) => {
-      files.forEach((file) => {
-      });
-    });
+  const files = await fse.readdir(route);
+  return await files.map(file => ({
+      name: file,
+      extName: path.extname(file)
+    })
+  )
 };
