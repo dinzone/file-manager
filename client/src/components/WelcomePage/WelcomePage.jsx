@@ -19,7 +19,7 @@ function WelcomePage({ onDriveSelect }) {
         </div>
             <div>
                 please choose disk drive: <Select
-                    options={[{ value: 'D:\\', label: 'D' }, { value: 'C:\\', label: 'C' }]}
+                    options={[{ value: 'D:', label: 'D' }, { value: 'C:', label: 'C' }]}
                     onChange={handleSelectChange}></Select>
             </div>
         </>
