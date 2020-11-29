@@ -23,7 +23,6 @@ function App() {
             <WelcomePage></WelcomePage>
           </Route>
         </Switch>
-
       </Router>
     </Div>
   );
