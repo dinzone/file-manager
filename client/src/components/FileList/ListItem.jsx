@@ -1,4 +1,4 @@
-import Path from 'path';
+import Path from 'path-browserify';
 import _ from 'lodash';
 import styled from 'styled-components';
 
@@ -16,12 +16,12 @@ const LineDiv = styled.div`
     }
 `;
 
-function ListItem({ className, path: { path, type }, pathClickFunc, path: pathObject }) {
+function ListItem({ className, path: { name, type }, pathClickFunc, path: pathObject }) {
     let Icon;
     if (type === 'dir') {
         Icon = faIcons['FaFolder'];
     } else if (type === 'file') {
-        const camelCaseExtname = _.capitalize(Path.extname(path).split('.')[1])
+        const camelCaseExtname = _.capitalize(Path.extname(name).split('.')[1])
         Icon = faIcons['Fa' + camelCaseExtname] || faIcons['FaFile' + camelCaseExtname] || faIcons['FaFileAlt'];
     } else {
         Icon = faIcons['FaQuestion'];
@@ -35,7 +35,7 @@ function ListItem({ className, path: { path, type }, pathClickFunc, path: pathOb
             <LineDiv>
                 <StyleIcon />
                 <div>
-                    {path}
+                    {name}
                 </div>
             </LineDiv>
         </div>
