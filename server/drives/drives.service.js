@@ -1,4 +1,3 @@
-const fse = require("fs-extra");
 const exec = require("child_process").exec;
 
 module.exports.getAllDrives = () => {

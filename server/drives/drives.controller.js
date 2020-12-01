@@ -7,4 +7,3 @@ module.exports.getDrives = (req, res, next) => {
     res.status(400).send("couldn't find drives");
   }
 };
-

@@ -8,4 +8,3 @@ module.exports.getFiles = async (req, res, next) => {
     res.status(400).send("couldn't find files");
   }
 };
-
