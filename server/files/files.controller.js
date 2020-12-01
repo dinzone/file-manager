@@ -5,7 +5,7 @@ module.exports.getFiles = async (req, res, next) => {
     res.json(await getAllFiles(route));
   } catch (err) {
     console.log(err);
-    res.status(500).send("couldn't find files");
+    res.status(400).send("couldn't find files");
   }
 };
 
