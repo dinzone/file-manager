@@ -1,7 +1,7 @@
 const fse = require("fs-extra");
 const exec = require("child_process").exec;
 
-module.exports.getAllDrives = async () => {
+module.exports.getAllDrives = () => {
     return new Promise ((resolve, reject) => {
         exec('wmic logicaldisk get name', (error, stdout, stderr) => {
             if (error) {
