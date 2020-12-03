@@ -16,7 +16,7 @@ function FileListContainer() {
             try {
                 setIsLoading(true);
                 setFilePaths([]);
-                setFilePaths(await getFilesByPath(location.split('/dirPath/')[1], mockData));
+                setFilePaths(await fetchFilesFromServer(location.split('/dirPath/')[1]));
             } catch (err) {
                 alert('not found');
                 setFilePaths([]);
@@ -28,8 +28,10 @@ function FileListContainer() {
     const onFileClick = (pathObject) => {
         if (pathObject.type === 'file') {
             alert(pathObject.name);
-        } else {
+        } else if (pathObject.type === 'folder') {
             history.push(`${location}/${pathObject.name}`);
+        } else {
+            alert('unkown file type!');
         }
     };
     return (
@@ -40,65 +42,9 @@ function FileListContainer() {
     )
 }
 
-function getFilesByPath(routePath, dataTree) {
-    if (!dataTree) throw new Error('NOT_FOUND');
-    if (routePath === '') return new Promise((resolve) => setTimeout(() => resolve(dataTree), 1000));
-    // if (routePath === '') return dataTree;
-
-    let splitRoute = routePath.split('/');
-    let treeNode = dataTree.find(({ type, name }) => type === 'dir' && name === splitRoute[0]);
-    splitRoute.splice(0, 1);
-    return getFilesByPath(splitRoute.join('/'), treeNode?.files);
+function fetchFilesFromServer(routePath) {
+    return fetch(`/files?path=${routePath}`)
+        .then((res) => res.json());
 }
-
-const mockData = [{
-    name: 'D:',
-    type: 'dir',
-    files: [
-        {
-            name: 'a.js',
-            type: 'file'
-        },
-        {
-            name: 'b.js',
-            type: 'file'
-        },
-        {
-            name: 'dirA',
-            type: 'dir',
-            files: [
-                {
-                    name: 'c.js',
-                    type: 'file'
-                }
-            ]
-        }
-    ],
-}, {
-    name: 'C:',
-    type: 'dir',
-    files: [
-        {
-            name: 'dirB',
-            type: 'dir',
-            files: [
-                {
-                    name: 'dirC',
-                    type: 'dir',
-                    files: [
-                        {
-                            name: 'd.js',
-                            type: 'file'
-                        },
-                        {
-                            name: 'e.js',
-                            type: 'file'
-                        },
-                    ]
-                }
-            ]
-        }
-    ]
-}];
 
 export default FileListContainer;

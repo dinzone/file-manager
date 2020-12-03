@@ -18,7 +18,7 @@ const LineDiv = styled.div`
 
 function ListItem({ className, path: { name, type }, pathClickFunc, path: pathObject }) {
     let Icon;
-    if (type === 'dir') {
+    if (type === 'folder') {
         Icon = faIcons['FaFolder'];
     } else if (type === 'file') {
         const camelCaseExtname = _.capitalize(Path.extname(name).split('.')[1])
