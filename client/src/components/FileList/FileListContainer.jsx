@@ -1,17 +1,30 @@
+import { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import HashLoader from 'react-spinners/HashLoader';
 
 import FileList from './FileList';
 
 function FileListContainer() {
     const { pathname: location } = useLocation();
+
+    const [filePaths, setFilePaths] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
     const history = useHistory();
-    let filePaths;
-    try {
-        filePaths = getFilesByPath(location.split('/dirPath/')[1], mockData);
-    } catch (err) {
-        alert('not found');
-        filePaths = [];
-    }
+    useEffect(() => {
+        (async function () {
+            try {
+                setIsLoading(true);
+                setFilePaths([]);
+                setFilePaths(await getFilesByPath(location.split('/dirPath/')[1], mockData));
+            } catch (err) {
+                alert('not found');
+                setFilePaths([]);
+            } finally {
+                setIsLoading(false);
+            }
+        })();
+    }, [location]);
     const onFileClick = (pathObject) => {
         if (pathObject.type === 'file') {
             alert(pathObject.name);
@@ -20,13 +33,17 @@ function FileListContainer() {
         }
     };
     return (
-        <FileList paths={filePaths} pathClickFunc={onFileClick}></FileList>
+        <>
+            <FileList paths={filePaths} pathClickFunc={onFileClick}></FileList>
+            {isLoading && <HashLoader></HashLoader>}
+        </>
     )
 }
 
 function getFilesByPath(routePath, dataTree) {
-    if (!dataTree) throw 'NOT_FOUND';
-    if (routePath === '') return dataTree;
+    if (!dataTree) throw new Error('NOT_FOUND');
+    if (routePath === '') return new Promise((resolve) => setTimeout(() => resolve(dataTree), 1000));
+    // if (routePath === '') return dataTree;
 
     let splitRoute = routePath.split('/');
     let treeNode = dataTree.find(({ type, name }) => type === 'dir' && name === splitRoute[0]);
