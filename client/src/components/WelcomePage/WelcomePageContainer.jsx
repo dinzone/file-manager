@@ -27,12 +27,15 @@ function WelcomePageContainer() {
     );
 }
 
-function getMockDrivers() {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve([{ value: 'D:', label: 'D' }, { value: 'C:', label: 'C' }]);
-        }, 2000);
-    });
+async function getMockDrivers() {
+    let drives = await fetch('/drives')
+        .then((res) => res.json());
+    return drives.map((d) => {
+        return {
+            label: d,
+            value: d
+        };
+    })
 }
 
 export default WelcomePageContainer;
