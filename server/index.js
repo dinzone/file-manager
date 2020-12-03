@@ -19,8 +19,8 @@ app.use(bodyParser.json());
 app.use(logger);
 app.use(setHeaders);
 
-app.use("/files", filesRouter);
-app.use("/drives", drivesRouter);
+app.use("/api/files", filesRouter);
+app.use("/api/drives", drivesRouter);
 
 app.listen(3000, () => {
   console.log("app listen on port 3000");
