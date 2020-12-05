@@ -1,3 +1,7 @@
+import {Provider} from 'react-redux';
+
+import store from './redux/store';
+
 import styled from 'styled-components';
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
@@ -7,13 +11,14 @@ import FileList from './components/FileList';
 import WelcomePage from './components/WelcomePage';
 import NavRouter from './components/NavRouter';
 
-const Div = styled.div`
+const StyledDiv = styled.div`
   background-color:aliceblue;
 `;
 
 function App() {
   return (
-    <Div className="App">
+    <Provider store={store}>
+    <StyledDiv>
       <NavBar></NavBar>
       <Router>
         <Switch>
@@ -26,7 +31,8 @@ function App() {
           </Route>
         </Switch>
       </Router>
-    </Div>
+    </StyledDiv>
+    </Provider>
   );
 }
 
