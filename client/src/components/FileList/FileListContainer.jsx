@@ -16,9 +16,11 @@ function FileListContainer() {
             try {
                 setIsLoading(true);
                 setFilePaths([]);
-                setFilePaths(await fetchFilesFromServer(location.split('/dirPath/')[1]));
+                setFilePaths(await fetchFilesFromServer(location.substring(1) + '/'));
             } catch (err) {
-                alert('not found');
+                // toast here
+                console.log(err);
+                alert('something went wrong, please try again');
                 setFilePaths([]);
             } finally {
                 setIsLoading(false);
@@ -43,7 +45,7 @@ function FileListContainer() {
 }
 
 function fetchFilesFromServer(routePath) {
-    return fetch(`/files?path=${routePath}`)
+    return fetch(`/api/files?path=${routePath}`)
         .then((res) => res.json());
 }
 
