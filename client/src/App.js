@@ -22,7 +22,7 @@ function App() {
       <NavBar></NavBar>
       <Router>
         <Switch>
-          <Route path='/dirPath/:dirPath'>
+          <Route path='/:dirPath'>
             <NavRouter></NavRouter>
             <FileList></FileList>
           </Route>

@@ -3,19 +3,24 @@ import WelcomePage from './WelcomePage';
 import { useHistory } from "react-router-dom";
 import { useState } from 'react';
 
-const FILE_LIST_ROUTE = '/dirPath';
-
 function WelcomePageContainer() {
     const history = useHistory();
     let [drives, setDrives] = useState(undefined),
         [isLoading, setIsLoading] = useState(false);
     function onDriveSelect(selectedDiskDrive) {
-        history.push(`${FILE_LIST_ROUTE}/${selectedDiskDrive}`);
+        history.push(`/${selectedDiskDrive}`);
     }
     async function fetchDriver() {
         setIsLoading(true);
-        setDrives(await getMockDrivers());
-        setIsLoading(false);
+        try {
+            setDrives(await getMockDrivers());
+        } catch (err) {
+            // toast here
+            console.log(err);
+            alert('somthing went wrong, please try again');
+        } finally {
+            setIsLoading(false);
+        }
     }
     return (
         <WelcomePage
@@ -28,7 +33,7 @@ function WelcomePageContainer() {
 }
 
 async function getMockDrivers() {
-    let drives = await fetch('/drives')
+    let drives = await fetch('/api/drives')
         .then((res) => res.json());
     return drives.map((d) => {
         return {
