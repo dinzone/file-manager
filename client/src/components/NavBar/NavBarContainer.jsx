@@ -3,12 +3,17 @@ import { useEffect, useState } from 'react';
 import moment from 'moment'
 
 import NavBar from './NavBar';
+import { useHistory } from 'react-router-dom';
 
 function NavBarContainer() {
     const [currentTime, setCurrentTime] = useState(moment());
+    const history = useHistory();
     let timeInterval = null;
     function setTimeInterval(intevalId) {
         timeInterval = intevalId;
+    }
+    function handleHomeButton() {
+        history.push('/');
     }
     useEffect(() => {
         setTimeInterval(setInterval(() => {
@@ -19,9 +24,9 @@ function NavBarContainer() {
                 clearInterval(timeInterval);
             }
         }
-    })
+    });
     return (
-        <NavBar time={currentTime}></NavBar>
+        <NavBar time={currentTime} onIconClick={handleHomeButton}></NavBar>
     );
 }
 

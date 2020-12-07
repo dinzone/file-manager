@@ -1,40 +1,41 @@
-import styled from 'styled-components';
+import { Folder } from '@material-ui/icons';
 
-import folderIcon from '../../assets/folderIcon.jpg'
+import { makeStyles } from '@material-ui/core/styles';
+import { Box, Typography } from '@material-ui/core';
 
-const NavHolder = styled.div`
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1em;
-    padding-bottom: 0.3em;
-    background-color:#c8e1f7;
-    user-select:none;
-`;
-
-const TimeDiv = styled.div`
-    margin-right: 1em;
-`;
-
-const IconDiv = styled.img`
-    margin-left: 1em;
-    width: 1.3em;
-    height: 1.3em;
-`;
+const useStyles = makeStyles((theme) => ({
+    root: {
+        background: theme.palette.primary.main,
+        justifyContent: 'space-between',
+        marginBottom: '1em',
+        paddingBottom: '0.5em',
+        paddingTop: '0.7em',
+        userSelect: 'none',
+        display: 'flex',
+    },
+    folderIcon: {
+        marginLeft: '0.3em',
+        cursor: 'pointer'
+    },
+    time: {
+        marginRight: '1em'
+    }
+}));
 
 const timeFormat = 'DD/MM/YYYY hh:mm:ss A';
 
-function NavBar({ time }) {
-
+function NavBar({ time, onIconClick }) {
+    const classes = useStyles();
     return (
-        <NavHolder>
-            <IconDiv src={folderIcon} />
-            <div>
+        <Box className={classes.root}>
+            <Folder className={classes.folderIcon} onClick={onIconClick} />
+            <Typography>
                 File Manager
-            </div>
-            <TimeDiv>
+            </Typography>
+            <Typography className={classes.time}>
                 {time.format(timeFormat)}
-            </TimeDiv>
-        </NavHolder>
+            </Typography>
+        </Box>
     );
 }
 
