@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 function WelcomePageContainer() {
     const history = useHistory();
-    let [drives, setDrives] = useState(undefined),
+    let [drives, setDrives] = useState([]),
         [isLoading, setIsLoading] = useState(false);
     function onDriveSelect(selectedDiskDrive) {
         history.push(`/${selectedDiskDrive}`);
@@ -18,6 +18,7 @@ function WelcomePageContainer() {
             // toast here
             console.log(err);
             alert('somthing went wrong, please try again');
+            setDrives([]);
         } finally {
             setIsLoading(false);
         }
@@ -34,13 +35,9 @@ function WelcomePageContainer() {
 
 async function getMockDrivers() {
     let drives = await fetch('/api/drives')
-        .then((res) => res.json());
-    return drives.map((d) => {
-        return {
-            label: d,
-            value: d
-        };
-    })
+        .then((res) => res.json())
+        .then((result) => new Promise((res) => setTimeout(() => res(result), 500)));
+    return drives;
 }
 
 export default WelcomePageContainer;

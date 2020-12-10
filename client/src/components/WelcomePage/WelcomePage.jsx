@@ -1,50 +1,65 @@
-import styled from 'styled-components';
-import Select from 'react-select';
 import HashLoader from 'react-spinners/HashLoader';
 
-const StyleSelect = styled(Select)`
-    width: 15em;
-`;
+import {
+    Box,
+    Typography,
+    makeStyles,
+    Select,
+    MenuItem,
+    FormControl,
+    InputLabel
+} from '@material-ui/core';
 
-const DivContainer = styled.div`
-    display:flex;
-    flex-direction:row;
-`;
+const useStyles = makeStyles((theme) => ({
+    root: {
+        marginLeft: '0.4em',
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    driveSelect: {
+        display: 'flex',
+        flexDirection: 'row'
+    },
+    formControl: {
+        minWidth: 120
+    }
+}));
 
 function WelcomePage({ onDriveSelect, loadOptions, options, isLoading }) {
-    function handleSelectChange(selectedDrive, { action }) {
-        switch (action) {
-            case 'select-option':
-                if (selectedDrive) {
-                    onDriveSelect(selectedDrive.value);
-                }
-                break;
-            default:
-                break;
+    const classes = useStyles();
+    function handleSelectChange(event) {
+        if (event.target.value) {
+            onDriveSelect(event.target.value);
         }
     }
     function onMenuOpen() {
-        if (!options) {
+        if (options.length === 0) {
             loadOptions();
         }
     }
     return (
-        <>
-            <div>
+        <Box className={classes.root}>
+            <Typography color="textPrimary" variant="h4" >
                 welcome to File Manager!
-            </div>
-            <DivContainer>
-                <div>
-                    please choose disk drive:
-                </div>
-                <StyleSelect
-                    options={options}
-                    onChange={handleSelectChange}
-                    onMenuOpen={onMenuOpen}>
-                </StyleSelect>
-                {isLoading && <HashLoader></HashLoader>}
-            </DivContainer>
-        </>
+                </Typography>
+            <Box className={classes.driveSelect}>
+                <Box>
+                    <Typography color="textPrimary">
+                        please choose disk drive:
+                </Typography>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel>Drive</InputLabel>
+                        <Select
+                            onChange={handleSelectChange}
+                            onOpen={onMenuOpen}
+                            value=''>
+                            {options.map((o) => (<MenuItem value={o}>{o}</MenuItem>))}
+                        </Select>
+                    </FormControl>
+                </Box>
+                {isLoading && <HashLoader />}
+            </Box>
+        </Box>
     );
 }
 
