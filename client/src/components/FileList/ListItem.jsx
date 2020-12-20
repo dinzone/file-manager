@@ -1,45 +1,54 @@
-import Path from 'path-browserify';
-import _ from 'lodash';
-import styled from 'styled-components';
+import {
+    makeStyles,
+    TableRow,
+    TableCell
+} from '@material-ui/core';
 
-import * as faIcons from 'react-icons/fa';
+import {
+    DescriptionTwoTone,
+    FolderTwoTone,
+    HelpTwoTone
+} from '@material-ui/icons';
 
-const LineDiv = styled.div`
-    display:flex;
-    flex-direction:row;
-    cursor:pointer;
-    user-select:none;
-    width:fit-content;
-    &:hover{
-        color:#5d5dac;
-        text-decoration:underline;
+const useStyles = makeStyles((theme) => ({
+    fileName: {
+        cursor: 'pointer',
+        '&:hover': {
+            textDecoration: 'underline'
+        },
+        maxWidth: 'fit-content'
     }
-`;
+}));
 
-function ListItem({ className, path: { name, type }, pathClickFunc, path: pathObject }) {
-    let Icon;
-    if (type === 'folder') {
-        Icon = faIcons['FaFolder'];
-    } else if (type === 'file') {
-        const camelCaseExtname = _.capitalize(Path.extname(name).split('.')[1])
-        Icon = faIcons['Fa' + camelCaseExtname] || faIcons['FaFile' + camelCaseExtname] || faIcons['FaFileAlt'];
-    } else {
-        Icon = faIcons['FaQuestion'];
-    }
+function ListItem({ path, pathClickFunc }) {
+    const { fileName } = useStyles();
+    const {
+        name,
+        type,
+        size,
+        createTime,
+        lastUpdate
+    } = path;
 
-    const StyleIcon = styled(({ className }) => <Icon className={className} />)`
-        margin-right:1em;
-    `;
+    const displayIfExist = (i) => (i === undefined || i === null) ? '-' : i;
     return (
-        <div className={className} onClick={() => pathClickFunc(pathObject)}>
-            <LineDiv>
-                <StyleIcon />
-                <div>
-                    {name}
-                </div>
-            </LineDiv>
-        </div>
-    );
+        <TableRow>
+            <TableCell>
+                {(type === 'folder') ?
+                    <FolderTwoTone /> :
+                    (type === 'file') ?
+                        <DescriptionTwoTone /> :
+                        <HelpTwoTone />}
+            </TableCell>
+            <TableCell
+                className={fileName}
+                onClick={() => pathClickFunc(path)}
+            >{displayIfExist(name)}</TableCell>
+            <TableCell>{displayIfExist(size)}</TableCell>
+            <TableCell>{displayIfExist(createTime)}</TableCell>
+            <TableCell>{displayIfExist(lastUpdate)}</TableCell>
+        </TableRow>
+    )
 }
 
 export default ListItem;
